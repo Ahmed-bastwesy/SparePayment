@@ -1,5 +1,6 @@
 let express = require('express');
 let userRoutes = require('./routes/userRoutes');
+let productRoutes = require('./routes/productRoutes');
 let errorHandler = require('./middlewares/errorHandler');
 let app = express();
 let port = 8500;
@@ -9,6 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}));
 
 app.use('/api/user',userRoutes)
+app.use('/api/product',productRoutes)
 
 app.use(errorHandler)
 app.listen(port,()=>{

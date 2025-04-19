@@ -1,8 +1,14 @@
 const Joi = require('joi');
+const AppError = require('../utils/appError');
 
 const productSchema = Joi.object({
+  productId: Joi.string().required().messages({
+    'any.required': 'Product id is required',
+    'string.empty': 'Product id is not allowed to be empty',
+  }),
   name: Joi.string().min(3).required().messages({
-    'string.empty': 'Product name is required',
+    'string.empty': 'Product name is not allowed to be empty',
+    'any.required': 'Product name is required',
     'string.min': 'Product name must be at least 3 characters',
   }),
   quantity: Joi.number().integer().min(1).required().messages({
@@ -19,9 +25,10 @@ const productSchema = Joi.object({
 });
 
 const validateProduct = (req, res, next) => {
+  if(!req.body) throw new AppError('Product id is required' ,400)
   const { error } = productSchema.validate(req.body);
   if (error) {
-    throw new Error(error.details[0].message )
+    throw new AppError(error.message || error.details[0].message ,400)
   }
   next();
 };
