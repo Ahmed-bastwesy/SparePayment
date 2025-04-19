@@ -26,8 +26,8 @@ router.put('/',validateProduct,(req,res,next)=>{
         });
 })
 router.delete('/:id',(req,res,next)=>{
-    productController.delete(req.params.id).then(product => {
-               return res.status(200).json({ message:"Product deleted successfull" , Product })
+    productController.delete(req.params.id).then(id => {
+               return res.status(200).json({ message:`Product id ${id} deleted successfull`})
         }).catch(error => {
                 next(new AppError(error, 400));
         });

@@ -17,9 +17,10 @@ const userSchema = Joi.object({
 
 
 const validateUser = (req, res, next) => {
+    if(!req.body) throw new AppError('Email is required' ,400)
     const { error } = userSchema.validate(req.body);
     if (error) {
-      throw new AppError(error.message || error.details[0].message ,400)
+      throw new AppError(error.details[0].message ,400)
     }
     next();
   };

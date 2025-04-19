@@ -22,11 +22,56 @@ module.exports = class ProductController {
                     }
                 }
                 products.push(data);
-                productService.create(products,data).then(res =>{
+                productService.update(products,data).then(res =>{
                     resolve(res);
                 }).catch(error=>{
                     reject(error)
                 })
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    update(data){
+        return new Promise(async(resolve, reject) => {
+            try {                
+                let products = await this.list();
+                if(products.length){
+                    let index = products.findIndex(prod => prod.productId == data.productId);
+                    if(index <= -1){
+                        reject("Product ID is not Exist")
+                        return;
+                    }else{
+                        products[index] = data
+                        productService.update(products,data).then(res =>{
+                            resolve(res);
+                        }).catch(error=>{
+                            reject(error)
+                        })
+                    }
+                }
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    delete(id){
+        return new Promise(async(resolve, reject) => {
+            try {                
+                let products = await this.list();
+                if(products.length){
+                    let updatedProducts = products.filter(prod => prod.productId != id);
+                    if(updatedProducts.length == products.length){
+                        reject("Product ID is not Exist")
+                        return;
+                    }else{
+                        productService.update(updatedProducts,id).then(res =>{
+                            resolve(res);
+                        }).catch(error=>{
+                            reject(error)
+                        })
+                    }
+                }
             } catch (error) {
                 reject(error)
             }

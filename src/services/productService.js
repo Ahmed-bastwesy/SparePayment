@@ -11,7 +11,7 @@ module.exports = class ProductService {
             }          
         })
     }
-    create(products,data){
+    update(products,data){
         return new Promise(async(resolve, reject) => {  
             try {                
                 await writeJSON('products.json',products);
