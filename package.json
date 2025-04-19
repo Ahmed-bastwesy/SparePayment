@@ -1,0 +1,20 @@
+{
+  "name": "spare-assignment",
+  "version": "1.0.0",
+  "description": "Spare Payment Assignment",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ahmed-bastwesy/SparePayment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ahmed-bastwesy/SparePayment/issues"
+  },
+  "homepage": "https://github.com/Ahmed-bastwesy/SparePayment#readme"
+}
