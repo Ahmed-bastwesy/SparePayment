@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const AppError = require('../utils/appError');
 
 // Define schema
 const userSchema = Joi.object({
@@ -6,7 +7,7 @@ const userSchema = Joi.object({
     'string.empty': 'Email is required',
     'string.email': 'Email must be a valid email address'
   }),
-  password: Joi.string().min(6).required().messages({
+  password: Joi.string().min(5).required().messages({
     'string.empty': 'Password is required',
     'string.min': 'Password must be at least 5 characters long'
   })
@@ -16,7 +17,7 @@ const userSchema = Joi.object({
 const validateUser = (req, res, next) => {
     const { error } = userSchema.validate(req.body);
     if (error) {
-      return res.status(400).json({ error: error.details[0].message });
+      throw new AppError(error.details[0].message ,400)
     }
     next();
   };
