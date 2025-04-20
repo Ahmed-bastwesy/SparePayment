@@ -3,12 +3,12 @@
     "productId": "13",
     "name": "Television",
     "quantity": 5,
-    "price": 200
+    "price": 600
   },
   {
     "productId": "12",
     "name": "Tve",
-    "quantity": 3,
+    "quantity": 0,
     "price": 100
   }
 ]

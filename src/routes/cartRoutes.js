@@ -19,5 +19,12 @@ router.put('/removeProduct/:id',checkAuth,(req,res,next)=>{
                     next(new AppError(error, 400));
             });
     })
+router.post('/addProduct',checkAuth,validateCart,(req,res,next)=>{
+        cartController.addProduct(req.user,req.body).then(cart => {
+                   return res.status(200).json({ message:"Products List" , ...cart })
+            }).catch(error => {
+                    next(new AppError(error, 400));
+            });
+    })
 
 module.exports = router;

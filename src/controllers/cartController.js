@@ -43,4 +43,41 @@ module.exports = class CartController {
             }
         })
     }
+    addProduct(user,product){
+        return new Promise(async(resolve, reject) => {
+            try {        
+                let productList = await this.checkProductAvailabilty(product);
+                let products = await cartService.listWithoutProjection(user.id);
+                let index = products.findIndex(prod => prod.productId == product.productId);
+                if(index > -1){
+                    products[index].quantity += product.quantity;
+                }else{
+                    products.push({userId:user.id,...product});
+                }
+                await cartService.update(products);
+                await productService.update(productList,product);
+                products = await this.list(user);
+                let totalPrice = this.calcPrice(products);
+                resolve({products :products, totalPrice});
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    checkProductAvailabilty(_product){
+        return new Promise(async(resolve, reject) => {
+            try {        
+                let products = await productService.list();
+                let index = products.findIndex(prod => prod.productId == _product.productId);
+                if(index > -1 && products[index].quantity >= _product.quantity){
+                    products[index].quantity -= _product.quantity;
+                    resolve(products);
+                }else{
+                    reject("product quantity not available");
+                }
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
 }

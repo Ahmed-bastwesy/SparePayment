@@ -22,6 +22,24 @@ module.exports = class CartService {
             }          
         })
     }
+    listWithoutProjection(_userId){
+        return new Promise(async(resolve, reject) => {  
+            try {                
+                let products = [];
+                const carts = await readJSON('carts.json');
+                if(carts.length){
+                    carts.forEach(ele => {
+                        if(ele.userId == _userId){
+                            products.push(ele)
+                        }
+                    })
+                }
+                resolve(products);
+            } catch (error) {
+                reject(error.message)
+            }          
+        })
+    }
     update(products){
         return new Promise(async(resolve, reject) => {  
             try {                
