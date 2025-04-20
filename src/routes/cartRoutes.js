@@ -6,7 +6,7 @@ let cartController = new (require('../controllers/cartController'))()
 const AppError = require('../utils/appError');
 
 router.get('/',checkAuth,(req,res,next)=>{
-    cartController.getUserCart(req.user).then(cart => {
+    cartController.getUserCart(req.user,req.body?.promoCode).then(cart => {
                return res.status(200).json({ message:"Products List" , ...cart })
         }).catch(error => {
                 next(new AppError(error, 400));

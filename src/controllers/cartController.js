@@ -1,4 +1,5 @@
 let productService = new(require("../services/productService"))();
+let promoService = new(require("../services/promoService"))();
 let cartService = new(require("../services/cartService"))();
 
 module.exports = class CartController {
@@ -19,12 +20,20 @@ module.exports = class CartController {
             0,
           )  
     }
-    getUserCart(user){
+    getUserCart(user,promoCode){
         return new Promise(async(resolve, reject) => {
             try {        
+                let discount = 0;
                 let products = await this.list(user);
                 let totalPrice = this.calcPrice(products);
-                resolve({products :products, totalPrice});
+                if(promoCode){
+                    let promos = await promoService.list();
+                    let index = promos.findIndex(pro => pro.name == promoCode);
+                    if(index > -1){
+                        discount = totalPrice*(promos[index].percentage/100);
+                    }
+                }
+                resolve({products :products, totalPrice: discount ? totalPrice - discount : totalPrice});
             } catch (error) {
                 reject(error)
             }
