@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "userId": 1,
+        "productId": "13",
+        "quantity": 6
+      },
+      {
+        "userId": 1,
+        "productId": "12",
+        "quantity": 2
+      },
+      {
+        "userId": 2,
+        "productId": "12",
+        "quantity": 2
+      }
+
+]

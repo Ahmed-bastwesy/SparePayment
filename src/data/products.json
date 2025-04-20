@@ -1,8 +1,14 @@
 [
   {
     "productId": "13",
-    "name": "TV12",
+    "name": "Television",
     "quantity": 5,
-    "price": 100.2221
+    "price": 200
+  },
+  {
+    "productId": "12",
+    "name": "Tve",
+    "quantity": 3,
+    "price": 100
   }
 ]

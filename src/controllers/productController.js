@@ -1,4 +1,5 @@
 let productService = new(require("../services/productService"))();
+let cartService = new(require("../services/cartService"))();
 
 module.exports = class ProductController {
     list(){
@@ -65,7 +66,8 @@ module.exports = class ProductController {
                         reject("Product ID is not Exist")
                         return;
                     }else{
-                        productService.update(updatedProducts,id).then(res =>{
+                        productService.update(updatedProducts,id).then(async(res) =>{
+                            await cartService.removeProduct(id);
                             resolve(res);
                         }).catch(error=>{
                             reject(error)
